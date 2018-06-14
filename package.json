@@ -1,0 +1,26 @@
+{
+  "name": "deploy-tool",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/js/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TakahiroSato/deploy-tool.git"
+  },
+  "author": "TakahiroSato",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TakahiroSato/deploy-tool/issues"
+  },
+  "homepage": "https://github.com/TakahiroSato/deploy-tool#readme",
+  "devDependencies": {
+    "electron": "^2.0.2"
+  },
+  "dependencies": {
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2"
+  }
+}

@@ -1,4 +1,4 @@
-# my-project
+# deploy-tool
 
 > An electron-vue project
 

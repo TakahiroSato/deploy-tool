@@ -14,6 +14,7 @@
           <div style="margin-top: 20px">
             <h3>秘密鍵</h3>
             <input type="text" v-model="inputSecretKeyPath" placeholder="secret key path">
+            <input id="secret-key" type="file">
           </div>
           <div style="margin-top: 20px">
             <h3>パスワード</h3>
@@ -22,6 +23,7 @@
           <div style="margin-top: 20px">
             <h3>バックアップ先</h3>
             <input type="text" v-model="inputBackUpPath" placeholder="backup path">
+            <input id="backup-folder" type="file">
           </div>
           <div style="margin-top: 20px">
             <input id="save" type="submit" value="保存" @click="save()">

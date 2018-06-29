@@ -1,8 +1,8 @@
 <template>
-  <div style="height: inherit;">
+  <div id="main-pane">
     <div id="left-pane">
       <ul>
-        <li v-for="host in hosts" @click="changeSetting(host)">{{ host }}</li>
+        <li class="left-pane" v-for="host in hosts" @click="changeSetting(host)">{{ host }}</li>
       </ul>
     </div>
     <div id="right-pane">
@@ -24,7 +24,7 @@
             <input type="text" v-model="inputBackUpPath" placeholder="backup path">
           </div>
           <div style="margin-top: 20px">
-            <input type="submit" value="保存" @click="save()">
+            <input id="save" type="submit" value="保存" @click="save()">
           </div>
       </div>
     </div>
@@ -104,24 +104,44 @@
 
   body { font-family: 'Source Sans Pro', sans-serif; }
 
+  #main-pane {
+    height: inherit;
+    margin: 0px 15px 10px 0px;
+    border: 2px solid #999999;
+  }
+
   #left-pane {
     width: 150px;
     height: inherit;
-    position: absolute;
-    left: 0;
+    display: inline-block;
+      float:left;
     text-align: center;
     border-style: solid;
     border-color: gray;
     border-width: 0 1px 0 0;
   }
 
+  li.left-pane{
+    width:100%;
+    padding-top:5px;
+    padding-bottom:5px;
+    border-bottom: 1px solid #999999;
+    color:red;
+  }
+
   #right-pane {
     height: inherit;
-    position: absolute;
-    left: 150px;
+    display: inline-block;
+      float:left;
   }
 
   ul{
     text-align: center;
+  }
+
+  #save{
+    padding: 0.5em 1em;
+    text-decoration: none;
+    background: #7FB6F5;
   }
 </style>

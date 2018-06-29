@@ -1,9 +1,9 @@
 <template>
   <div id="wrapper">
-    <ul>
-      <li v-for="(tab, index) in tabNav" @click="changeTab(index)" v-bind:class="{ active: index === contents }">{{ tab }}</li>
+    <ul class="tab-selector">
+      <li class="tab-selector" v-for="(tab, index) in tabNav" @click="changeTab(index)" v-bind:class="{ active: index === contents }">{{ tab }}</li>
     </ul>
-    <div v-bind:style="{ clear:'both', height: height + 'px' }">
+    <div v-bind:style="{ clear:'both', height: height-30 + 'px' }">
       <div v-if="contents == 0" class="tab-content">
         <ConnectionSettingPage />
       </div>
@@ -69,14 +69,23 @@
   li{
     display:block;
     float:left;
-    background:#dddddd;
     width: 100px;
-    border-right:1px solid #ffffff;
     text-align: center;
   }
 
   li.active{
     background: #aaaaaa;
+  }
+
+  ul.tab-selector{
+    display:inline-block;
+    margin-bottom: 5px;
+  }
+
+  li.tab-selector{
+    border:2px solid #999999;
+    margin-right: 5px;
+    background:#dddddd;
   }
 
   .tab-content{

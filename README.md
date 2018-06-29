@@ -2,7 +2,7 @@
 
 ## 必要
 * Python 2.*
-* Node.js
+* Node.js v8.11.1
 
 ```
 $git clone https://github.com/TakahiroSato/deploy-tool.git deploy-tool

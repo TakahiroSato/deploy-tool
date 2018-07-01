@@ -1,7 +1,7 @@
 <template>
   <div id="left-pane">
     <ul>
-        <li class="left-pane" v-for="host in hosts" v-bind:key="host" @click="changeSetting(host)">{{ host }}</li>
+        <li class="left-pane" v-for="host in hosts" v-bind:key="host" @click="selectHost(host)">{{ host }}</li>
     </ul>
   </div>
 </template>
@@ -11,8 +11,8 @@
     name: 'host-list',
     props: ['hosts'],
     methods: {
-      changeSetting: function (host) {
-        this.$emit('changeSetting', host)
+      selectHost: function (host) {
+        this.$emit('selectHost', host)
       }
     }
   }

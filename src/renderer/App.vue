@@ -12,8 +12,4 @@
 
 <style>
   /* CSS */
-#app {
-  margin: 5px;
-}
-
 </style>

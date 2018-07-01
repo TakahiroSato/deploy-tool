@@ -17,6 +17,7 @@
 <script>
   import ConnectionSettingPage from './TabPage/ConnectionSettingPage'
   import DeployPage from './TabPage/DeployPage'
+  const tabHeight = 28
 
   export default {
     name: 'start-page',
@@ -31,7 +32,7 @@
           'デプロイ'
         ],
         contents: 0,
-        height: 574
+        height: window.innerHeight - tabHeight
       }
     },
     methods: {
@@ -39,11 +40,11 @@
         this.contents = index
       },
       handleResize: function () {
-        this.height = window.innerHeight - 24
+        this.height = window.innerHeight - tabHeight
       }
     },
     mounted: function () {
-      this.height = window.innerHeight - 24
+      this.height = window.innerHeight - tabHeight
       window.addEventListener('resize', this.handleResize)
     },
     beforeDestroy: function () {
@@ -62,8 +63,7 @@
   body { font-family: 'Source Sans Pro', sans-serif; }
 
   #wrapper{
-    width: 100vw;
-    height: 100vh;
+    margin: 5px;
   }
 
   li{

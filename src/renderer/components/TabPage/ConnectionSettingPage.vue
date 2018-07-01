@@ -1,6 +1,6 @@
 <template>
   <div id="main-pane">
-    <hostList v-on:changeSetting=changeSetting :hosts=hosts />
+    <hostList v-on:selectHost=changeSetting :hosts=hosts />
     <div id="right-pane">
       <div style="margin-left: 50px; margin-top: 20px">
           <div>
@@ -31,8 +31,9 @@
 
 <script>
   import hostList from '../hostList'
-  var connectionsFilePath = require('electron').remote.app.getAppPath() + '\\data\\connections.json'
   const {dialog} = require('electron').remote
+  const config = require('config').default
+  const connectionsFilePath = config.connectionsFilePath
   export default {
     name: 'connection-setting-page',
     components: {
@@ -70,12 +71,9 @@
         this.readFile()
       },
       readFile: function () {
-        var fs = require('fs')
-        var json = fs.readFileSync(connectionsFilePath, 'utf-8')
-        if (json.length > 0) {
-          this.connections = []
-          this.connections = this.connections.concat(JSON.parse(json))
-        }
+        const hostList = config.getHostList()
+        this.connections = []
+        this.connections = this.connections.concat(hostList)
         this.hosts = []
         this.hosts = this.connections.map(function (d) {
           return d.host

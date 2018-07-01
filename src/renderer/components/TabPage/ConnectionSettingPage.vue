@@ -1,10 +1,6 @@
 <template>
   <div id="main-pane">
-    <div id="left-pane">
-      <ul>
-        <li class="left-pane" v-for="host in hosts" @click="changeSetting(host)">{{ host }}</li>
-      </ul>
-    </div>
+    <hostList v-on:changeSetting=changeSetting :hosts=hosts />
     <div id="right-pane">
       <div style="margin-left: 50px; margin-top: 20px">
           <div>
@@ -34,9 +30,13 @@
 </template>
 
 <script>
+  import hostList from '../hostList'
   var connectionsFilePath = require('electron').remote.app.getAppPath() + '\\data\\connections.json'
   export default {
     name: 'connection-setting-page',
+    components: {
+      hostList
+    },
     data: function () {
       return {
         inputHost: '',
@@ -98,7 +98,7 @@
 </script>
 
 <style>
-    * {
+  * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -112,33 +112,10 @@
     border: 2px solid #999999;
   }
 
-  #left-pane {
-    width: 150px;
-    height: inherit;
-    display: inline-block;
-      float:left;
-    text-align: center;
-    border-style: solid;
-    border-color: gray;
-    border-width: 0 1px 0 0;
-  }
-
-  li.left-pane{
-    width:100%;
-    padding-top:5px;
-    padding-bottom:5px;
-    border-bottom: 1px solid #999999;
-    color:red;
-  }
-
   #right-pane {
     height: inherit;
     display: inline-block;
       float:left;
-  }
-
-  ul{
-    text-align: center;
   }
 
   #save{

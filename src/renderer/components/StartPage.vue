@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper">
     <ul class="tab-selector">
-      <li class="tab-selector" v-for="(tab, index) in tabNav" @click="changeTab(index)" v-bind:class="{ active: index === contents }">{{ tab }}</li>
+      <li class="tab-selector" v-for="(tab, index) in tabNav" v-bind:key="index" @click="changeTab(index)" v-bind:class="{ active: index === contents }">{{ tab }}</li>
     </ul>
     <div v-bind:style="{ clear:'both', height: height-30 + 'px' }">
       <div v-if="contents == 0" class="tab-content">

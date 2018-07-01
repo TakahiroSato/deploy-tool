@@ -60,7 +60,7 @@
           password: this.inputPassword,
           backupPath: this.inputBackUpPath
         })
-        fs.writeFile(connectionsFilePath,
+        fs.writeFileSync(connectionsFilePath,
           JSON.stringify(this.connections, null, ''), 'utf-8', (err) => {
             if (err) {
               console.log(err)

@@ -10,7 +10,7 @@
           <div style="margin-top: 20px">
             <h3>秘密鍵</h3>
             <input type="text" v-model="inputSecretKeyPath" placeholder="secret key path">
-            <input id="secret-key" type="file">
+            <input type="button" value="参照" @click="openDialogForFile">
           </div>
           <div style="margin-top: 20px">
             <h3>パスワード</h3>
@@ -19,7 +19,7 @@
           <div style="margin-top: 20px">
             <h3>バックアップ先</h3>
             <input type="text" v-model="inputBackUpPath" placeholder="backup path">
-            <input id="backup-folder" type="file">
+            <input type="button" value="参照" @click="openDialogForDir">
           </div>
           <div style="margin-top: 20px">
             <input id="save" type="submit" value="保存" @click="save()">
@@ -32,6 +32,7 @@
 <script>
   import hostList from '../hostList'
   var connectionsFilePath = require('electron').remote.app.getAppPath() + '\\data\\connections.json'
+  const {dialog} = require('electron').remote
   export default {
     name: 'connection-setting-page',
     components: {
@@ -89,6 +90,28 @@
         this.inputSecretKeyPath = setting.secretKey
         this.inputPassword = setting.password
         this.inputBackUpPath = setting.backupPath
+      },
+      openDialogForFile: function () {
+        dialog.showOpenDialog(
+          {
+            properties: ['openFile'],
+            title: 'select ssh secretkey file'
+          }, (fileName) => {
+            if (fileName) {
+              this.inputSecretKeyPath = fileName
+            }
+          })
+      },
+      openDialogForDir: function () {
+        dialog.showOpenDialog(
+          {
+            properties: ['openDirectory'],
+            title: 'select backup directory'
+          }, (dirName) => {
+            if (dirName) {
+              this.inputBackUpPath = dirName
+            }
+          })
       }
     },
     mounted: function () {

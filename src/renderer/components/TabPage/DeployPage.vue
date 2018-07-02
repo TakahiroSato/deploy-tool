@@ -5,8 +5,8 @@
       <div style="margin-left: 50px; margin-top: 20px">
           <div>
             <h3>デプロイするディレクトリ</h3>
-            <input type="text" />
-            <input type="button" value="参照" />
+            <input type="text" v-model="deployDir" />
+            <input type="button" value="参照" @click="openDialogForDeployDir()" />
           </div>
           <div>
             <textarea rows="10" cols="50" v-model="deployFiles"/>
@@ -17,8 +17,8 @@
           </div>
           <div>
             <h3>バックアップ先</h3>
-            <input type="text" />
-            <input type="button" value="参照" />
+            <input type="text" v-model="backUpDir" />
+            <input type="button" value="参照" @click="openDialogForBackUpDir()" />
           </div>
           <input type="button" value="test" @click="exec()" />
           <div style="position: absolute; bottom: 20px">
@@ -31,6 +31,7 @@
 
 <script>
   import hostList from '../hostList'
+  const {dialog} = require('electron').remote
   const config = require('config').default
   export default {
     name: 'deploy-page',
@@ -42,7 +43,9 @@
         connections: [],
         hosts: [],
         stdout: '',
-        deployFiles: ''
+        deployDir: '',
+        deployFiles: '',
+        backUpDir: ''
       }
     },
     methods: {
@@ -57,6 +60,28 @@
         this.hosts = this.connections.map(function (d) {
           return d.host
         })
+      },
+      openDialogForDeployDir: function () {
+        dialog.showOpenDialog(
+          {
+            properties: ['openDirectory'],
+            title: 'select deploy directory'
+          }, (dirName) => {
+            if (dirName) {
+              this.deployDir = dirName
+            }
+          })
+      },
+      openDialogForBackUpDir: function () {
+        dialog.showOpenDialog(
+          {
+            properties: ['openDirectory'],
+            title: 'select backup directory'
+          }, (dirName) => {
+            if (dirName) {
+              this.backUpDir = dirName
+            }
+          })
       },
       exec: function () {
         const exec = require('child_process').exec

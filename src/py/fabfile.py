@@ -16,17 +16,25 @@ except json.JSONDecodeError as e:
   print('JSONDecodeError: ', e)
 
 # env.user = map(lambda c: c['user'], connectionsData)
-env.hosts = map(lambda c: c['host'], connectionsData)
-env.key_filename = map(lambda c: c['secretKey'], connectionsData)
-env.password = map(lambda c: c['password'], connectionsData)
+# env.hosts = map(lambda c: c['host'], connectionsData)
+# env.key_filename = map(lambda c: c['secretKey'], connectionsData)
+# env.password = map(lambda c: c['password'], connectionsData)
 # env.localRoot = 
 # env.remoteRoot = 
-# env.backup_path = 
-env.sudo_prompt = '[sudo] password for ' + env.user + ':'
+# env.backupRoot = 
+# env.sudo_prompt = '[sudo] password for ' + env.user + ':'
 
+def printEnv(host):
+    for h in filter(lambda c: c['host'] == host, connectionsData):
+        env.hosts = h['host']
+        env.key_filename = h['secretKey']
+        env.password = h['password']
+        #env.user = h['user']
+        env.sudo_prompt = '[sudo] password for ' + env.user + ':'
 
-def printEnv():
-	pprint(env)
+def func():
+    pprint(env)
+    run('mkdir -p /home/t.sato/test')
 
 def deploy():
 	backup()

@@ -21,7 +21,7 @@
             <input type="button" value="参照" @click="openDialogForBackUpDir()" />
           </div>
           <input type="button" value="test" @click="exec()" />
-          <div style="position: absolute; bottom: 20px">
+          <div>
             <textarea id="output-window" disabled v-model="stdout" />
           </div>
       </div>
@@ -58,7 +58,7 @@
         this.connections = this.connections.concat(hostList)
         this.hosts = []
         this.hosts = this.connections.map(function (d) {
-          return d.host
+          return d.settingName
         })
       },
       openDialogForDeployDir: function () {

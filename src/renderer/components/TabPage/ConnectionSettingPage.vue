@@ -3,9 +3,17 @@
     <hostList v-on:selectHost=changeSetting :hosts=hosts />
     <div id="right-pane">
       <div style="margin-left: 50px; margin-top: 20px">
-          <div>
+          <div style="margin-top: 20px">
+            <h3>設定名</h3>
+            <input type="text" v-model="inputSettingName" placeholder="name">
+          </div>
+          <div style="margin-top: 20px">
             <h3>接続先</h3>
             <input type="text" v-model="inputHost" placeholder="host or ip">
+          </div>
+          <div style="margin-top: 20px">
+            <h3>ユーザ名</h3>
+            <input type="text" v-model="inputUserName" placeholder="user name">
           </div>
           <div style="margin-top: 20px">
             <h3>秘密鍵</h3>
@@ -41,7 +49,9 @@
     },
     data: function () {
       return {
+        inputSettingName: '',
         inputHost: '',
+        inputUserName: '',
         inputSecretKeyPath: '',
         inputPassword: '',
         inputBackUpPath: '',
@@ -53,10 +63,12 @@
       save: function () {
         var fs = require('fs')
         this.connections.some(function (v, i) {
-          if (v.host === this.inputHost) this.connections.splice(i, 1)
+          if (v.settingName === this.inputSettingName) this.connections.splice(i, 1)
         }.bind(this))
         this.connections.push({
+          settingName: this.inputSettingName,
           host: this.inputHost,
+          userName: this.inputUserName,
           secretKey: this.inputSecretKeyPath,
           password: this.inputPassword,
           backupPath: this.inputBackUpPath
@@ -76,15 +88,17 @@
         this.connections = this.connections.concat(hostList)
         this.hosts = []
         this.hosts = this.connections.map(function (d) {
-          return d.host
+          return d.settingName
         })
       },
-      changeSetting: function (host) {
+      changeSetting: function (settingName) {
         var setting = this.connections.filter(function (v, i) {
-          if (v.host === host) return true
+          if (v.settingName === settingName) return true
         })
         setting = setting[0]
+        this.inputSettingName = setting.settingName
         this.inputHost = setting.host
+        this.inputUserName = setting.userName
         this.inputSecretKeyPath = setting.secretKey
         this.inputPassword = setting.password
         this.inputBackUpPath = setting.backupPath

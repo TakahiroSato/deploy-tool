@@ -15,12 +15,12 @@ try:
 except json.JSONDecodeError as e:
   print('JSONDecodeError: ', e)
 
-def setHost(host):
-    for h in filter(lambda c: c['host'] == host, connectionsData):
+def setHost(settingName):
+    for h in filter(lambda c: c['settingName'] == settingName, connectionsData):
       env.hosts = h['host']
       env.key_filename = h['secretKey']
       env.password = h['password']
-      env.user = h['user']
+      env.user = h['userName']
       #env.localRoot = 
       #env.localBackUpRoot = 
       #env.remoteRoot = 

@@ -12,6 +12,10 @@ $pipenv install
 $npm install
 ```
 
+## 実行
+```
+$npm run dev
+```
 
 electron-vue
 

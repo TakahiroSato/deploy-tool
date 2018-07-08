@@ -93,7 +93,7 @@
       },
       changeSetting: function (settingName) {
         var setting = this.connections.filter(function (v, i) {
-          if (v.settingName === settingName) return true
+          return v.settingName === settingName
         })
         setting = setting[0]
         this.inputSettingName = setting.settingName

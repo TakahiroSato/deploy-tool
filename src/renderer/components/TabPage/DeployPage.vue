@@ -5,24 +5,24 @@
       <div style="margin-left: 50px; margin-top: 20px">
           <div>
             <h3>デプロイするディレクトリ</h3>
-            <input type="text" v-model="deployDir" />
+            <input type="text" v-model="deployDir" style="width:30em"/>
             <input type="button" value="参照" @click="openDialogForDeployDir()" />
           </div>
           <div>
-            <textarea rows="10" cols="50" v-model="deployFiles"/>
+            <textarea rows="10" cols="70" v-model="deployFiles" disabled/>
           </div>
           <div>
             <h3>デプロイ先</h3>
-            <input type="text" />
+            <input type="text" v-model="remoteDir" style="width:30em"/>
           </div>
           <div>
             <h3>バックアップ先</h3>
-            <input type="text" v-model="backUpDir" />
+            <input type="text" v-model="backUpDir" style="width:30em"/>
             <input type="button" value="参照" @click="openDialogForBackUpDir()" />
           </div>
-          <input type="button" value="test" @click="exec()" />
+          <input type="button" value="deploy" @click="exec()" />
           <div>
-            <textarea id="output-window" disabled v-model="stdout" />
+            <textarea id="output-window" v-model="stdout" disabled/>
           </div>
       </div>
     </div>
@@ -40,17 +40,23 @@
     },
     data: function () {
       return {
+        selectedSettingName: '',
         connections: [],
         hosts: [],
         stdout: '',
         deployDir: '',
         deployFiles: '',
+        remoteDir: '',
         backUpDir: ''
       }
     },
     methods: {
-      selectHost: function (host) {
-        // ToDo : implement
+      selectHost: function (settingName) {
+        const setting = config.getHostList().filter(function (v, i) {
+          return v.settingName === settingName
+        })
+        this.selectedSettingName = setting[0].settingName
+        this.backUpDir = setting[0].backupPath
       },
       readFile: function () {
         const hostList = config.getHostList()
@@ -69,6 +75,8 @@
           }, (dirName) => {
             if (dirName) {
               this.deployDir = dirName
+              this.deployFiles = this.getFileNames(dirName).map(
+                f => dirName.toString() + '\\' + f).join('\n')
             }
           })
       },
@@ -85,7 +93,11 @@
       },
       exec: function () {
         const exec = require('child_process').exec
-        var command = this.deployFiles
+        var command = 'cd src/py & pipenv run fab setHost:' +
+          this.selectedSettingName + ',' +
+          this.deployDir + ',' +
+          this.remoteDir + ',' +
+          this.backUpDir + ' deploy'
         exec(command, (error, stdout, stderr) => {
           if (error) {
             console.log(error)
@@ -95,6 +107,9 @@
           var buf = Buffer.alloc(stdout.length, stdout, 'binary')
           this.stdout = iconv.decode(buf, jschardet.detect(stdout).encoding)
         })
+      },
+      getFileNames: function (dir) {
+        return require('fs-readdir-recursive')(dir.toString())
       }
     },
     mounted: function () {

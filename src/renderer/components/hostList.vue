@@ -1,7 +1,7 @@
 <template>
   <div id="left-pane">
     <ul>
-        <li class="left-pane" v-for="host in hosts" v-bind:key="host" @click="selectHost(host)">{{ host }}</li>
+        <li v-for="(host, index) in hosts" v-bind:key="index" v-bind:class="{ 'left-pane': true, active: host == selectedHost }" @click="selectHost(host)">{{ host }}</li>
     </ul>
   </div>
 </template>
@@ -10,8 +10,14 @@
   export default {
     name: 'host-list',
     props: ['hosts'],
+    data: function () {
+      return {
+        selectedHost: ''
+      }
+    },
     methods: {
       selectHost: function (host) {
+        this.selectedHost = host
         this.$emit('selectHost', host)
       }
     }

@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
+    "fs-readdir-recursive": "^1.1.0",
     "iconv-lite": "^0.4.23",
     "jschardet": "^1.6.0",
     "vue": "^2.3.3",

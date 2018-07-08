@@ -1,13 +1,13 @@
 # deploy-tool
 
 ## 必要
-* Python 2.*
+* Python 3~
+* pipenv
 * Node.js v8.11.1
 
 ```
 $git clone https://github.com/TakahiroSato/deploy-tool.git deploy-tool
 $cd deploy-tool
-$pip install pipenv
 $pipenv install
 $npm install
 ```

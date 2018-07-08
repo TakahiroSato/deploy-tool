@@ -15,32 +15,25 @@ try:
 except json.JSONDecodeError as e:
   print('JSONDecodeError: ', e)
 
-# env.user = map(lambda c: c['user'], connectionsData)
-# env.hosts = map(lambda c: c['host'], connectionsData)
-# env.key_filename = map(lambda c: c['secretKey'], connectionsData)
-# env.password = map(lambda c: c['password'], connectionsData)
-# env.localRoot = 
-# env.remoteRoot = 
-# env.backupRoot = 
-# env.sudo_prompt = '[sudo] password for ' + env.user + ':'
-
-def printEnv(host):
+def setHost(host):
     for h in filter(lambda c: c['host'] == host, connectionsData):
-        env.hosts = h['host']
-        env.key_filename = h['secretKey']
-        env.password = h['password']
-        #env.user = h['user']
-        env.sudo_prompt = '[sudo] password for ' + env.user + ':'
+      env.hosts = h['host']
+      env.key_filename = h['secretKey']
+      env.password = h['password']
+      env.user = h['user']
+      #env.localRoot = 
+      #env.localBackUpRoot = 
+      #env.remoteRoot = 
+      env.sudo_prompt = '[sudo] password for ' + env.user + ':'
 
-def func():
+def printEnv():
     pprint(env)
-    run('mkdir -p /home/t.sato/test')
 
 def deploy():
 	backup()
 	print "start deploy-------------\n"
 	start = time.time()
-	remoteDir = chkType()
+	remoteDir = env.remoteRoot
 	f = open(env.file, 'r')
 	for file in f:
 		file = file.replace('\n','')
@@ -53,7 +46,7 @@ def deploy():
 def backup():
 	print "start backup-------------\n"
 	start = time.time()
-	remoteDir = chkType()
+	remoteDir = env.remoteRoot
 	err = []
 	f = open(env.file, 'r')
 	for file in f:
